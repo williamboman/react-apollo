@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ApolloClient from 'apollo-client';
 import { DefaultOptions } from 'apollo-client/ApolloClient';
 import { InMemoryCache as Cache } from 'apollo-cache-inmemory';
@@ -9,7 +9,7 @@ import { ApolloCache } from 'apollo-cache';
 export * from './test-links';
 
 export interface MockedProviderProps<TSerializedCache = {}> {
-  mocks?: MockedResponse[];
+  mocks?: ReadonlyArray<MockedResponse>;
   addTypename?: boolean;
   defaultOptions?: DefaultOptions;
   cache?: ApolloCache<TSerializedCache>;
@@ -42,6 +42,9 @@ export class MockedProvider extends React.Component<MockedProviderProps, MockedP
   }
 
   public componentWillUnmount() {
+    if (!this.state.client.queryManager) {
+      return;
+    }
     const scheduler = this.state.client.queryManager.scheduler;
     Object.keys(scheduler.registeredQueries).forEach(queryId => {
       scheduler.stopPollingQuery(queryId);
