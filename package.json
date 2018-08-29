@@ -1,6 +1,6 @@
 {
   "name": "react-apollo-mockedprovider-fix",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "author": "opensource@apollographql.com",
   "browser": "lib/react-apollo.browser.umd.js",
   "description": "React data container for Apollo Client",
